@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Helvetica Neue", Arial, sans-serif;
+  
+  --color-brand-gold: #D4AF37;
+  --color-brand-gold-dark: #b5952f;
+  --color-brand-black: #050505;
+  --color-brand-charcoal: rgba(255, 255, 255, 0.03);
+  --color-brand-gray: rgba(255, 255, 255, 0.08);
+  --color-brand-light: #F5F5F5;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-brand-black)] text-white font-sans antialiased selection:bg-[var(--color-brand-gold)] selection:text-black;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-gray);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-gold);
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .perspective-\[1000px\] { perspective: 1000px; }
+  .transform-style-3d { transform-style: preserve-3d; }
+  .translate-z-\[50px\] { transform: translateZ(50px); }
+  .translate-z-\[100px\] { transform: translateZ(100px); }
+  .translate-z-\[20px\] { transform: translateZ(20px); }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-slow { animation: float 8s ease-in-out infinite; }
+  .animate-float-fast { animation: float 4s ease-in-out infinite; }
+}
+
+@keyframes float {
+  0%, 100% { translate: 0px 0px; }
+  50% { translate: 0px -20px; }
+}
