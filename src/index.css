@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
   
   --color-brand-gold: #D4AF37;
   --color-brand-gold-dark: #b5952f;
@@ -14,7 +15,7 @@
 
 @layer base {
   body {
-    @apply bg-[var(--color-brand-black)] text-white font-sans antialiased selection:bg-[var(--color-brand-gold)] selection:text-black;
+    @apply bg-black text-white font-sans antialiased selection:bg-white selection:text-black;
   }
 }
 

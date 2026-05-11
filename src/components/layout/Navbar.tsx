@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { name: "Work", path: "/portfolio" },
-  { name: "Services", path: "/services" },
-  { name: "Pricing", path: "/pricing" },
-  { name: "About", path: "/about" },
+  { name: "Services", path: "#services" },
+  { name: "Pricing & Combos", path: "#pricing" },
+  { name: "Payments", path: "#payments" },
 ];
 
 export function Navbar() {
@@ -39,30 +38,30 @@ export function Navbar() {
         )}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link to="/" className="text-xl font-display font-bold tracking-tighter z-50 relative group flex items-center gap-2">
-            <div className="w-8 h-8 bg-[var(--color-brand-gold)] flex items-center justify-center font-black text-black text-lg">K</div>
+          <a href="#" className="text-xl font-display font-bold tracking-tighter z-50 relative group flex items-center gap-2">
+            <div className="w-8 h-8 bg-white flex items-center justify-center font-black text-black text-lg">K</div>
             MATLHOKO<span className="font-light">GRAPHICS</span>
-          </Link>
+          </a>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <Link
+              <a
                 key={link.path}
-                to={link.path}
+                href={link.path}
                 className={cn(
-                  "text-xs font-semibold tracking-widest uppercase transition-colors hover:text-[var(--color-brand-gold)]",
-                  location.pathname.startsWith(link.path)
+                  "text-xs font-semibold tracking-widest uppercase transition-colors hover:text-white",
+                  location.hash === link.path
                     ? "text-white"
                     : "text-white/60"
                 )}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
-            <Link to="/booking">
-              <Button variant="outline">Start Your Project</Button>
-            </Link>
+            <a href="https://wa.me/27693585662" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline">Order Now</Button>
+            </a>
           </nav>
 
           {/* Mobile Nav Toggle */}
@@ -93,12 +92,13 @@ export function Navbar() {
                   key={link.path}
                   className="w-full text-center"
                 >
-                  <Link
-                    to={link.path}
-                    className="text-4xl font-display font-light uppercase tracking-wider block"
+                  <a
+                    href={link.path}
+                    className="text-4xl font-display font-light uppercase tracking-wider block text-white hover:text-white/80"
+                    onClick={() => setIsOpen(false)}
                   >
                     {link.name}
-                  </Link>
+                  </a>
                 </motion.div>
               ))}
               <motion.div
@@ -107,9 +107,9 @@ export function Navbar() {
                 transition={{ delay: NAV_LINKS.length * 0.1 }}
                 className="mt-8 w-full flex justify-center"
               >
-                <Link to="/booking">
-                  <Button size="lg" className="w-full xs:w-auto">Book Now</Button>
-                </Link>
+                <a href="https://wa.me/27693585662" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="w-full xs:w-auto">Order via WhatsApp</Button>
+                </a>
               </motion.div>
             </nav>
           </motion.div>

@@ -1,17 +1,32 @@
+import { useState } from "react";
 import { motion } from "motion/react";
-import { Link } from "react-router-dom";
-import { ArrowRight, Star, Clock, Zap, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Star, ShieldCheck, CreditCard, ChevronRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export default function Home() {
+  const [selectedPackage, setSelectedPackage] = useState<"package1" | "package2">("package2");
+  const [extraHeadliners, setExtraHeadliners] = useState(0);
+
+  const comboPackages = {
+    package1: { name: "Event Combo Package 1", price: 320 },
+    package2: { name: "Event Combo Package 2", price: 380, popular: true },
+  };
+
+  const currentPackage = comboPackages[selectedPackage];
+  const totalCost = currentPackage.price + extraHeadliners * 20;
+
+  const whatsappMessage = encodeURIComponent(
+    `Hello K Matlhoko Graphics,\n\nI would like to order: *${currentPackage.name}* (Base: R${currentPackage.price})\nExtras: *${extraHeadliners} Extra Headliners*\n\n*Total Estimated:* R${totalCost}\n\nPlease let me know the next steps for payment and design details.`
+  );
+  const whatsappUrl = `https://wa.me/27693585662?text=${whatsappMessage}`;
+
   return (
     <div className="w-full">
       {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Background gradient effects */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--color-brand-gold-dark)]/20 rounded-full blur-[120px] mix-blend-screen mix-blend-lighten pointer-events-none" />
-          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[var(--color-brand-gray)]/40 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+          <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full grid lg:grid-cols-2 gap-12 items-center">
@@ -20,216 +35,240 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="mb-6">
-              <span className="text-[11px] font-bold uppercase tracking-[4px] text-[var(--color-brand-gold)]">Available for new projects</span>
+            <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[11px] font-bold uppercase tracking-widest text-white/80">Premium Design Agency</span>
             </div>
             
-            <h1 className="text-[50px] md:text-[82px] font-display font-[800] leading-[0.9] tracking-[-3px] mb-8">
-              DESIGNS THAT MAKE BRANDS <br />
-              <span className="text-[var(--color-brand-gold)] italic font-light pr-2">IMPOSSIBLE</span>
-              <br /> TO IGNORE
+            <h1 className="text-[50px] md:text-[76px] font-[900] leading-[0.95] tracking-tight mb-8">
+              Precision Design.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">3D Innovation.</span>
             </h1>
             
-            <p className="text-white/50 text-lg max-w-xl mb-10 leading-relaxed">
-              K Matlhoko Graphics creates premium visual identities, posters, branding, and digital experiences that capture attention and drive results.
+            <p className="text-white/60 text-lg max-w-xl mb-10 leading-relaxed font-medium">
+              We specialize in high-end 3D modeling and premium graphic design. From event posters to brand identities, we deliver protected artworks that command attention.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Link to="/portfolio" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg group">
-                  View Portfolio
+              <a href="#pricing" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg group bg-white text-black hover:bg-white/90">
+                  View Packages
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </Link>
-              <Link to="/booking" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-lg">
-                  Start Your Project
+              </a>
+              <a href="https://wa.me/27693585662" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-lg border-white/20 hover:bg-white/5">
+                  Order on WhatsApp
                 </Button>
-              </Link>
+              </a>
             </div>
             
             <div className="mt-12 flex items-center gap-6 text-sm text-white/50 font-medium">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-[var(--color-brand-black)] bg-gray-800 flex items-center justify-center overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Client" className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-                <span>500+ Happy Clients</span>
-              </div>
-              <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
-              <div className="hidden sm:flex items-center gap-1">
-                {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-[var(--color-brand-gold)] text-[var(--color-brand-gold)]" />)}
-                <span className="ml-1">5.0 Rated</span>
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-white text-white" />)}
+                <span className="ml-2 text-white">Trust & Quality Guaranteed</span>
               </div>
             </div>
           </motion.div>
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
             className="hidden lg:flex relative h-[600px] w-full items-center justify-center p-8"
           >
-            <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
-              <div className="space-y-4">
-                <div className="aspect-[3/4] w-full bg-cover bg-center transition-transform duration-300 relative overflow-hidden glass rounded-2xl flex flex-col justify-end p-4 border border-white/10" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600')" }}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="text-[10px] font-bold mb-1 text-[var(--color-brand-gold)]">BRANDING</div>
-                    <div className="text-sm uppercase font-black">LUMIÈRE IDENTITY</div>
-                  </div>
-                </div>
-                <div className="w-full bg-cover bg-center transition-transform duration-300 relative overflow-hidden glass rounded-2xl flex flex-col justify-end p-4 border border-white/10" style={{ height: '240px', backgroundImage: "url('https://images.unsplash.com/photo-1627398225058-f4f408731c5f?auto=format&fit=crop&q=80&w=600')" }}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="text-[10px] font-bold mb-1 text-[var(--color-brand-gold)]">POSTER</div>
-                    <div className="text-sm uppercase font-black">SUMMER JAM '24</div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4 pt-12">
-                <div className="w-full bg-cover bg-center transition-transform duration-300 relative overflow-hidden glass rounded-2xl flex flex-col justify-end p-4 border border-white/10" style={{ height: '220px', backgroundImage: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600')" }}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="text-[10px] font-bold mb-1 text-[var(--color-brand-gold)]">LOGOTYPE</div>
-                    <div className="text-sm uppercase font-black">TECHWAVE SA</div>
-                  </div>
-                </div>
-                <div className="aspect-[3/4] w-full bg-cover bg-center transition-transform duration-300 relative overflow-hidden glass rounded-2xl flex flex-col justify-end p-4 border border-white/10" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&q=80&w=600')" }}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="text-[10px] font-bold mb-1 text-[var(--color-brand-gold)]">ALBUM ART</div>
-                    <div className="text-sm uppercase font-black">DEEP SOUL EP</div>
-                  </div>
-                </div>
-              </div>
+            <div className="relative w-full aspect-square max-w-lg rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a]">
+               {/* Placeholder abstract 3D visual feeling */}
+               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-[#050505] to-black"></div>
+               <div className="absolute inset-0 flex flex-col items-center justify-center">
+                 <div className="w-48 h-48 border border-white/10 rounded-full animate-spin [animation-duration:15s] flex items-center justify-center">
+                    <div className="w-32 h-32 border border-white/20 rounded-full animate-spin [animation-duration:10s] [animation-direction:reverse]"></div>
+                 </div>
+                 <div className="absolute text-5xl font-black tracking-tighter mix-blend-overlay opacity-30">3D</div>
+               </div>
+               <div className="absolute bottom-6 left-6 right-6">
+                 <div className="glass p-4 rounded-xl text-xs uppercase tracking-widest font-bold flex justify-between items-center bg-black/40 backdrop-blur-md border border-white/10">
+                   <span>Protected Artwork</span>
+                   <ShieldCheck className="w-4 h-4 text-white" />
+                 </div>
+               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* SERVICES PREVIEW */}
-      <section className="py-32 bg-[var(--color-brand-charcoal)] relative">
+      {/* CORE MESSAGE SECTION */}
+      <section id="services" className="py-24 bg-[#0a0a0a] border-y border-white/5">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <ShieldCheck className="w-12 h-12 mx-auto mb-6 text-white/80" />
+          <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tight">Premium, Protected Artworks.</h2>
+          <p className="text-lg md:text-xl text-white/60 leading-relaxed">
+            Every piece crafted at K Matlhoko Graphics is a commitment to precision. We don't just design; we engineer visual experiences that elevate your brand. All original files remain securely protected as intellectual property, ensuring your investment is exclusive and professional.
+          </p>
+        </div>
+      </section>
+
+      {/* PRICING GRID */}
+      <section id="pricing" className="py-32 relative">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-sm font-bold tracking-widest text-[var(--color-brand-gold)] uppercase mb-4">Our Expertise</h2>
-              <h3 className="text-4xl md:text-5xl font-display font-bold leading-tight">Visual Solutions For <br className="hidden md:block"/>Modern Brands</h3>
-            </div>
-            <Link to="/services">
-              <Button variant="ghost" className="group">
-                View All Services 
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+          <div className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">Standard Services</h2>
+            <p className="text-white/60 text-lg max-w-2xl">High-quality design solutions customized for your needs. Simple pricing, exceptional results.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: "Poster Design", desc: "Event, promotional, and school posters that demand attention.", icon: "🖼️" },
-              { title: "Brand Identity", desc: "Logos, color palettes, and comprehensive brand guidelines.", icon: "✨" },
-              { title: "Social Media", desc: "Engaging graphics for Instagram, Facebook, and Twitter.", icon: "📱" },
-            ].map((service, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative p-8 rounded-3xl bg-[var(--color-brand-black)] border border-white/5 hover:border-[var(--color-brand-gold)]/40 transition-colors duration-500 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-brand-gold)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-                <div className="text-4xl mb-6">{service.icon}</div>
-                <h4 className="text-2xl font-display font-bold mb-3">{service.title}</h4>
-                <p className="text-white/60 leading-relaxed mb-8">{service.desc}</p>
-                <Link to="/services" className="inline-flex items-center text-sm font-bold tracking-wider text-white group-hover:text-[var(--color-brand-gold)] uppercase transition-colors">
-                  Explore <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
+              { title: "Single Poster", price: "150", desc: "High-resolution promotional or event poster." },
+              { title: "Booking Sleeve", price: "150", desc: "Professional DJ or artist booking profile design." },
+              { title: "Gig Guide", price: "150", desc: "Organized layout for tour dates or weekly events." },
+              { title: "Logo Design/Mock-up", price: "120", desc: "Brand identity creation with 3D realistic mock-ups." },
+              { title: "Business Cards", price: "150", desc: "Premium, print-ready business card layouts." },
+              { title: "Ticket Design", price: "70", desc: "Secure and visually striking event tickets." },
+            ].map((item, i) => (
+              <div key={i} className="p-8 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-white/30 transition-colors flex flex-col h-full">
+                <div className="flex-grow">
+                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                  <p className="text-white/50 text-sm mb-6">{item.desc}</p>
+                </div>
+                <div>
+                  <div className="text-3xl font-black mb-6">R{item.price}</div>
+                  <a href={`https://wa.me/27693585662?text=Hello, I would like to order: ${item.title}`} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="w-full flex justify-between group border-white/20">
+                      Order Now
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </a>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="py-32 bg-[var(--color-brand-black)] overflow-hidden">
+      {/* COMBO PACKAGES & CALCULATOR */}
+      <section className="py-32 bg-[#050505] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-sm font-bold tracking-widest text-[var(--color-brand-gold)] uppercase mb-4">Why K Matlhoko</h2>
-              <h3 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">Designed To Stand Out. Built To Convert.</h3>
-              <p className="text-white/70 text-lg mb-10 leading-relaxed">
-                We blend raw creativity with strategic marketing principles. Every design we craft isn't just beautiful—it's engineered to achieve your business goals.
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Event Combos & Customization</h2>
+              <p className="text-white/60 text-lg mb-10 max-w-xl">
+                Maximize your event's reach with our bundled packages. Need more artists on the poster? Customizing is easy and affordable.
               </p>
               
-              <div className="space-y-6">
-                {[
-                  { title: "Fast Turnaround", desc: "Professional designs delivered on schedule, every time.", icon: Clock },
-                  { title: "Premium Quality", desc: "High-resolution, pixel-perfect assets ready for print or web.", icon: Star },
-                  { title: "Unlimited Creativity", desc: "Fresh, innovative concepts tailored specifically to your brand.", icon: Zap },
-                ].map((feature, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="mt-1 w-12 h-12 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 bg-white/5">
-                      <feature.icon className="w-5 h-5 text-[var(--color-brand-gold)]" />
-                    </div>
-                    <div>
-                      <h5 className="text-xl font-bold font-display mb-1">{feature.title}</h5>
-                      <p className="text-white/60">{feature.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-            
-            <div className="relative">
-              <div className="aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden relative border border-white/10">
-                <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&q=80&w=800" alt="Design Process" className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-brand-black)] via-transparent to-transparent opacity-80"></div>
-                
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl">
-                     <p className="text-2xl font-display font-bold text-white mb-2">99%</p>
-                     <p className="text-sm text-white/70 font-medium">Client Satisfaction Rate over 5 years of operation.</p>
-                  </div>
+              <div className="space-y-4 mb-8 text-sm text-white/70">
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-white shrink-0" />
+                  <p><strong>Package 1 (R320):</strong> Covers essential event visuals for standard promo.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-white shrink-0" />
+                  <p><strong>Package 2 (R380):</strong> Comprehensive suite for major events.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-white shrink-0" />
+                  <p><strong>Customization:</strong> Add extra headliners to any event poster for just R20 each.</p>
                 </div>
               </div>
             </div>
-            
+
+            {/* EVENT CALCULATOR */}
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] pointer-events-none -mr-20 -mt-20"></div>
+              
+              <h3 className="text-2xl font-bold mb-8">Event Cost Calculator</h3>
+              
+              <div className="space-y-8 relative z-10">
+                {/* Package Selection */}
+                <div>
+                  <label className="block text-sm font-bold uppercase tracking-wider text-white/50 mb-4">Select Base Package</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {(Object.keys(comboPackages) as Array<keyof typeof comboPackages>).map((key) => {
+                      const pkg = comboPackages[key];
+                      const isSelected = selectedPackage === key;
+                      return (
+                        <div 
+                          key={key}
+                          onClick={() => setSelectedPackage(key)}
+                          className={`relative p-4 rounded-xl border cursor-pointer transition-all ${
+                            isSelected ? 'bg-white text-black border-white' : 'bg-transparent border-white/20 text-white hover:border-white/40'
+                          }`}
+                        >
+                          {pkg.popular && (
+                            <div className="absolute -top-3 -right-2 bg-black text-white text-[10px] font-bold px-2 py-1 rounded-[4px] border border-white/20">
+                              MOST POPULAR
+                            </div>
+                          )}
+                          <div className="font-bold mb-1">{pkg.name}</div>
+                          <div className={`text-xl font-black ${isSelected ? 'text-black' : 'text-white/80'}`}>R{pkg.price}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Extras Counter */}
+                <div>
+                  <label className="block text-sm font-bold uppercase tracking-wider text-white/50 mb-4">Extras</label>
+                  <div className="flex items-center justify-between p-4 bg-[#111] border border-white/10 rounded-xl">
+                    <div>
+                      <div className="font-bold">Extra Headliners</div>
+                      <div className="text-xs text-white/50">+R20 per extra artist on poster</div>
+                    </div>
+                    <div className="flex items-center gap-4 bg-black rounded-lg p-1 border border-white/10">
+                      <button 
+                        onClick={() => setExtraHeadliners(Math.max(0, extraHeadliners - 1))}
+                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                      >
+                        -
+                      </button>
+                      <span className="font-bold w-6 text-center">{extraHeadliners}</span>
+                      <button 
+                        onClick={() => setExtraHeadliners(extraHeadliners + 1)}
+                        className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Total & CTA */}
+                <div className="pt-6 border-t border-white/10">
+                  <div className="flex justify-between items-end mb-6">
+                    <span className="text-sm font-bold uppercase tracking-wider text-white/50">Estimated Total</span>
+                    <span className="text-4xl font-black">R{totalCost}</span>
+                  </div>
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button size="lg" className="w-full h-14 text-base font-bold bg-white text-black hover:bg-white/90">
+                      Confirm via WhatsApp
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA BANNER */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--color-brand-gold)]"></div>
-        {/* Abstract pattern */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#000 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-        
-        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-[var(--color-brand-black)] mb-6 tracking-tight">Ready To Elevate Your Brand?</h2>
-          <p className="text-lg md:text-xl text-[var(--color-brand-charcoal)] mb-10 max-w-2xl mx-auto font-medium">
-            Let's turn your vision into visuals. Our calendar is filling up quickly for this month.
+      {/* PAYMENTS & BOOKING BANNER */}
+      <section id="payments" className="py-24 bg-[#111] border-t border-white/10 text-center">
+        <div className="max-w-3xl mx-auto px-6">
+          <CreditCard className="w-12 h-12 mx-auto mb-6 text-white/80" />
+          <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tight">Payments & Booking</h2>
+          <p className="text-lg text-white/60 mb-8 max-w-xl mx-auto leading-relaxed">
+            All design bookings are processed securely to ensure prompt scheduling and fast delivery. Once your order is confirmed, payments are made exclusively through:
           </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/contact">
-              <Button size="lg" className="h-16 px-10 text-lg bg-[var(--color-brand-black)] text-white hover:bg-[var(--color-brand-charcoal)] shadow-[0_10px_30px_rgba(0,0,0,0.3)] w-full sm:w-auto">
-                Chat on WhatsApp
+          <div className="bg-[#050505] p-6 rounded-2xl border border-white/10 inline-block text-left mb-10 min-w-fit shadow-2xl">
+             <div className="text-sm text-white/50 uppercase tracking-widest font-bold mb-2">Banking Details</div>
+             <div className="text-2xl font-bold mb-1">Capitec Bank</div>
+             <div className="text-xl font-mono text-white/80">Acc: 2459018696</div>
+          </div>
+          <div>
+            <a href="https://wa.me/27693585662" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="outline" className="border-white/20 text-white px-10 h-14">
+                Chat With Us
               </Button>
-            </Link>
-            <Link to="/booking">
-              <Button size="lg" className="h-16 px-10 text-lg border-2 border-[var(--color-brand-black)] text-[var(--color-brand-black)] hover:bg-[var(--color-brand-black)] hover:text-[var(--color-brand-gold)] bg-transparent w-full sm:w-auto transition-colors font-bold">
-                Book A Consultation
-              </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>
